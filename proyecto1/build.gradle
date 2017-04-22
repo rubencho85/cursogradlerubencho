@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+
+//definicion de las propiedades del archivo, con esto se dice que la compilacion de java es con 1.8
+version = '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//librerias para este proyecto
+dependencies {
+    testCompile project.ext.junit
+    testCompile project.ext.mockito
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'proyecto1',
+                   'Implementation-Version': version
+    }
+}
+
+test {
+	jacoco {
+		append = false
+		destinationFile = file("jacoco/jacocoTest.exec")
+	}
+	reports.junitXml.destination =  file("jacoco/test-results")
+}
+
+//jacocoTestReport.dependsOn(test)
